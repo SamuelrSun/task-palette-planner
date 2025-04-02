@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,23 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Custom colors for the production scheduling app
+				purple: {
+					light: '#D6BCFA',
+					DEFAULT: '#9F7AEA',
+					dark: '#7E57C2',
+				},
+				blue: {
+					light: '#90CDF4',
+					DEFAULT: '#63B3ED',
+					dark: '#4299E1',
+				},
+				teal: {
+					light: '#B2F5EA',
+					DEFAULT: '#4FD1C5',
+					dark: '#38B2AC',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
