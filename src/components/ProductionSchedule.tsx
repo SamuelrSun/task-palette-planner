@@ -20,7 +20,7 @@ const dateOptions = [
 
 const machines = ['Machine 1', 'Machine 2', 'Machine 3', 'Machine 4', 'Machine 5'];
 const hours = [
-  '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', 
+  '9AM', '10AM', '11AM', '12PM', 
   '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM'
 ];
 
@@ -30,14 +30,16 @@ const employees = [
   { id: 2, name: 'Emma Davis', color: 'bg-blue-400' },
   { id: 3, name: 'Michael Chen', color: 'bg-teal-400' },
   { id: 4, name: 'Sarah Johnson', color: 'bg-amber-400' },
+  { id: 5, name: 'David Wilson', color: 'bg-red-400' },
+  { id: 6, name: 'Lisa Garcia', color: 'bg-green-400' },
 ];
 
-// Mock tasks data
+// Updated tasks data with more entries
 const tasks = [
   { 
     id: 1, 
     employeeId: 1, 
-    startHour: 9, 
+    startHour: 0, // 9AM 
     duration: 2, 
     machineIndex: 0,
     date: 'Monday, 3/31'
@@ -45,7 +47,7 @@ const tasks = [
   { 
     id: 2, 
     employeeId: 2, 
-    startHour: 10, 
+    startHour: 1, // 10AM
     duration: 3, 
     machineIndex: 1,
     date: 'Tuesday, 4/1'
@@ -53,7 +55,7 @@ const tasks = [
   { 
     id: 3, 
     employeeId: 3, 
-    startHour: 11, 
+    startHour: 2, // 11AM
     duration: 3, 
     machineIndex: 2,
     date: 'Wednesday, 4/2'
@@ -61,7 +63,7 @@ const tasks = [
   { 
     id: 4, 
     employeeId: 3,  
-    startHour: 13, 
+    startHour: 4, // 1PM
     duration: 2, 
     machineIndex: 2,
     date: 'Wednesday, 4/2'
@@ -69,7 +71,7 @@ const tasks = [
   { 
     id: 5, 
     employeeId: 4,  
-    startHour: 14, 
+    startHour: 5, // 2PM
     duration: 4, 
     machineIndex: 3,
     date: 'Wednesday, 4/2'
@@ -77,10 +79,69 @@ const tasks = [
   { 
     id: 6, 
     employeeId: 1,  
-    startHour: 8, 
+    startHour: 0, // 9AM
     duration: 3, 
     machineIndex: 4,
     date: 'Thursday, 4/3'
+  },
+  // Additional tasks for Monday
+  { 
+    id: 7, 
+    employeeId: 5,  
+    startHour: 3, // 12PM
+    duration: 3, 
+    machineIndex: 2,
+    date: 'Monday, 3/31'
+  },
+  { 
+    id: 8, 
+    employeeId: 6,  
+    startHour: 1, // 10AM
+    duration: 4, 
+    machineIndex: 3,
+    date: 'Monday, 3/31'
+  },
+  { 
+    id: 9, 
+    employeeId: 2,  
+    startHour: 6, // 3PM
+    duration: 3, 
+    machineIndex: 4,
+    date: 'Monday, 3/31'
+  },
+  // Additional tasks for Tuesday
+  { 
+    id: 10, 
+    employeeId: 4,  
+    startHour: 5, // 2PM
+    duration: 2, 
+    machineIndex: 0,
+    date: 'Tuesday, 4/1'
+  },
+  { 
+    id: 11, 
+    employeeId: 5,  
+    startHour: 7, // 4PM
+    duration: 3, 
+    machineIndex: 3,
+    date: 'Tuesday, 4/1'
+  },
+  // Additional tasks for Friday
+  { 
+    id: 12, 
+    employeeId: 6,  
+    startHour: 2, // 11AM
+    duration: 5, 
+    machineIndex: 1,
+    date: 'Friday, 4/4'
+  },
+  { 
+    id: 13, 
+    employeeId: 3,  
+    startHour: 8, // 5PM
+    duration: 2, 
+    machineIndex: 0,
+    date: 'Friday, 4/4'
   },
 ];
 
