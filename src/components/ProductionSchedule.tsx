@@ -1,47 +1,107 @@
 
-import React from 'react';
-import { Share2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Share2, ChevronDown } from 'lucide-react';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 // Mock data for the schedule
-const days = ['Monday, 3/31', 'Tuesday, 4/1', 'Wednesday, 4/2', 'Thursday, 4/3', 'Friday, 4/4'];
+const dateOptions = [
+  'Monday, 3/31', 
+  'Tuesday, 4/1', 
+  'Wednesday, 4/2', 
+  'Thursday, 4/3', 
+  'Friday, 4/4'
+];
+
+const machines = ['Machine 1', 'Machine 2', 'Machine 3', 'Machine 4', 'Machine 5'];
 const hours = [
   '5AM', '6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', 
   '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM'
+];
+
+// Mock employee data
+const employees = [
+  { id: 1, name: 'John Smith', color: 'bg-purple-400' },
+  { id: 2, name: 'Emma Davis', color: 'bg-blue-400' },
+  { id: 3, name: 'Michael Chen', color: 'bg-teal-400' },
+  { id: 4, name: 'Sarah Johnson', color: 'bg-amber-400' },
 ];
 
 // Mock tasks data
 const tasks = [
   { 
     id: 1, 
-    employeeColor: 'bg-purple-400', 
+    employeeId: 1, 
     startHour: 9, 
     duration: 2, 
-    day: 0 
+    machineIndex: 0,
+    date: 'Monday, 3/31'
   },
   { 
     id: 2, 
-    employeeColor: 'bg-blue-400', 
+    employeeId: 2, 
     startHour: 10, 
     duration: 3, 
-    day: 1 
+    machineIndex: 1,
+    date: 'Tuesday, 4/1'
   },
   { 
     id: 3, 
-    employeeColor: 'bg-teal-400', 
+    employeeId: 3, 
     startHour: 11, 
     duration: 3, 
-    day: 2 
+    machineIndex: 2,
+    date: 'Wednesday, 4/2'
   },
   { 
     id: 4, 
-    employeeColor: 'bg-teal-400', 
+    employeeId: 3,  
     startHour: 13, 
     duration: 2, 
-    day: 2 
+    machineIndex: 2,
+    date: 'Wednesday, 4/2'
+  },
+  { 
+    id: 5, 
+    employeeId: 4,  
+    startHour: 14, 
+    duration: 4, 
+    machineIndex: 3,
+    date: 'Wednesday, 4/2'
+  },
+  { 
+    id: 6, 
+    employeeId: 1,  
+    startHour: 8, 
+    duration: 3, 
+    machineIndex: 4,
+    date: 'Thursday, 4/3'
   },
 ];
 
 const ProductionSchedule: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState(dateOptions[0]);
+
+  // Get the employee color based on employeeId
+  const getEmployeeColor = (employeeId: number) => {
+    const employee = employees.find(emp => emp.id === employeeId);
+    return employee ? employee.color : 'bg-gray-400';
+  };
+
+  // Get the employee name based on employeeId
+  const getEmployeeName = (employeeId: number) => {
+    const employee = employees.find(emp => emp.id === employeeId);
+    return employee ? employee.name : 'Unknown';
+  };
+
+  // Filter tasks by selected date
+  const filteredTasks = tasks.filter(task => task.date === selectedDate);
+
   return (
     <div className="flex-1 overflow-hidden">
       <div className="p-6">
@@ -52,13 +112,33 @@ const ProductionSchedule: React.FC = () => {
               <Share2 className="w-5 h-5" />
             </button>
           </h2>
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="flex items-center gap-2">
+                {selectedDate}
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              {dateOptions.map((date, index) => (
+                <DropdownMenuItem 
+                  key={index} 
+                  onClick={() => setSelectedDate(date)}
+                  className="cursor-pointer"
+                >
+                  {date}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         
         <div className="flex border-b border-gray-200 pb-2">
           <div className="w-16"></div> {/* Empty space for time labels */}
-          {days.map((day, index) => (
+          {machines.map((machine, index) => (
             <div key={index} className="flex-1 text-center font-medium">
-              {day}
+              {machine}
             </div>
           ))}
         </div>
@@ -70,23 +150,27 @@ const ProductionSchedule: React.FC = () => {
                 {hour}
               </div>
               
-              {days.map((_, dayIndex) => (
+              {machines.map((_, machineIndex) => (
                 <div 
-                  key={`${hourIndex}-${dayIndex}`} 
+                  key={`${hourIndex}-${machineIndex}`} 
                   className="flex-1 h-10 border-l border-gray-100 relative"
                 >
-                  {tasks
-                    .filter(task => task.day === dayIndex && task.startHour === hourIndex)
+                  {filteredTasks
+                    .filter(task => task.machineIndex === machineIndex && task.startHour === hourIndex)
                     .map(task => (
                       <div 
                         key={task.id}
-                        className={`absolute w-[95%] rounded-md ${task.employeeColor}`}
+                        className={`absolute w-[95%] rounded-md ${getEmployeeColor(task.employeeId)} group`}
                         style={{ 
                           height: `${task.duration * 40}px`,
                           top: 0,
                           left: '2.5%',
                         }}
-                      ></div>
+                      >
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-30 text-white text-xs font-medium transition-opacity rounded-md">
+                          {getEmployeeName(task.employeeId)}
+                        </div>
+                      </div>
                     ))
                   }
                 </div>
